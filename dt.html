@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyTrove</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .buttons a, .btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .buttons a:hover, .btn:hover {
+            background-color: #0056b3;
+        }
+        form input, form select, form textarea, form button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: calc(100% - 22px);
+            box-sizing: border-box;
+        }
+        #adCanvas {
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        #factsList div {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div id="mainContainer" class="container">
+        <!-- Home Page -->
+        <div id="homePage">
+            <h1>Welcome to DailyTrove</h1>
+            <div class="buttons">
+                <a href="#" class="btn" onclick="showPage('paymentPage')">Create Ad</a>
+                <a href="#" class="btn" onclick="showPage('factsPage')">Facts!</a>
+                <a href="#" class="btn">In Development</a>
+            </div>
+        </div>
+
+        <!-- Login Page -->
+        <div id="loginPage" style="display:none;">
+            <h1>Login</h1>
+            <form id="loginForm">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+
+        <!-- Payment Page -->
+        <div id="paymentPage" style="display:none;">
+            <h1>Payment</h1>
+            <form id="paymentForm">
+                <label for="bannerSize">Select Banner Size:</label>
+                <select id="bannerSize">
+                    <option value="small">Small - $2.50</option>
+                    <option value="medium">Medium - $5.00</option>
+                    <option value="large">Large - $10.00</option>
+                </select>
+
+                <label for="currency">Select Currency:</label>
+                <select id="currency">
+                    <option value="USD">USD</option>
+                    <option value="CAD">CAD</option>
+                    <option value="GBP">GBP</option>
+                    <option value="YEN">YEN</option>
+                    <option value="EUR">EUR</option>
+                </select>
+
+                <input type="text" id="ccNumber" placeholder="Credit Card Number" required>
+                <input type="text" id="ccCode" placeholder="Security Code" required>
+                <input type="text" id="ccExpiry" placeholder="Expiration Date (MM/YY)" required>
+                <button type="submit" class="btn">Pay</button>
+            </form>
+        </div>
+
+        <!-- Design Page -->
+        <div id="designPage" style="display:none;">
+            <h1>Design Your Banner</h1>
+            <canvas id="adCanvas" width="800" height="400"></canvas>
+            <textarea id="adText" placeholder="Enter text here"></textarea>
+            <button id="saveBtn" class="btn">Save</button>
+            <button id="downloadBtn" class="btn">Download</button>
+        </div>
+
+        <!-- Facts Page -->
+        <div id="factsPage" style="display:none;">
+            <h1>Facts</h1>
+            <form id="factsForm">
+                <textarea id="factText" placeholder="Enter a fact" required></textarea>
+                <button type="submit" class="btn">Upload</button>
+            </form>
+            <div id="factsList"></div>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.container > div').forEach(div => {
+                div.style.display = 'none';
+            });
+            document.getElementById(pageId).style.display = 'block';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Handle login logic here
+            showPage('homePage'); // Simulate successful login
+        });
+
+        document.getElementById('paymentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Handle payment logic here
+            showPage('designPage'); // Redirect to design page after payment
+        });
+
+        document.getElementById('factsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const factText = document.getElementById('factText').value;
+            const factsList = document.getElementById('factsList');
+            const newFact = document.createElement('div');
+            newFact.textContent = factText;
+            factsList.appendChild(newFact);
+            document.getElementById('factText').value = ''; // Clear the textarea
+        });
+
+        const canvas = document.getElementById('adCanvas');
+        const ctx = canvas.getContext('2d');
+
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            // Handle saving logic here
+        });
+
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            // Handle downloading logic here
+        });
+
+        // Show the login page initially
+        showPage('loginPage');
+    </script>
+</body>
+</html>
